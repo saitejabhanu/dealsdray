@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Employee</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+      line-height: 1.6;
+    }
+
+    .navbar {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar .logo {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .navbar .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar .nav-links li {
+      display: inline;
+    }
+
+    .navbar .nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .navbar .nav-links li a:hover {
+      color: #e0e0e0;
+    }
+
+    .navbar .user-section {
+      font-size: 14px;
+    }
+
+    .navbar .user-section a {
+      color: #f5f5f5;
+      text-decoration: none;
+      font-weight: bold;
+      margin-left: 5px;
+    }
+
+    .navbar .user-section a:hover {
+      color: #dcdcdc;
+    }
+
+    .form-container {
+      background-color: white;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    input[type="radio"], input[type="checkbox"] {
+      width: auto;
+      margin-right: 5px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 12px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar .nav-links {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .form-container {
+        width: 90%;
+      }
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('employeeForm');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        document.querySelectorAll('.error-message').forEach((msg) => {
+          msg.style.display = 'none';
+        });
+
+        const email = document.getElementById('email').value;
+        const emailError = document.getElementById('emailError');
+        if (!email.match(/^\S+@\S+\.\S+$/)) {
+          emailError.textContent = 'Invalid email format.';
+          emailError.style.display = 'block';
+          return;
+        }
+        const mobile = document.getElementById('mobile').value;
+        const mobileError = document.getElementById('mobileError');
+        if (!mobile.match(/^\d{10}$/)) {
+          mobileError.textContent = 'Mobile number must be 10 digits.';
+          mobileError.style.display = 'block';
+          return;
+        }
+        const img = document.getElementById('img').files[0];
+        const imgError = document.getElementById('imgError');
+        if (img && !['image/jpeg', 'image/png'].includes(img.type)) {
+          imgError.textContent = 'Only JPG and PNG files are allowed.';
+          imgError.style.display = 'block';
+          return;
+        }
+        console.log('Form submitted successfully!');
+        alert('Form submitted successfully!');
+        form.reset();
+      });
+    });
+  </script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">Logo</div>
+    <ul class="nav-links">
+      <li><a href="dashboard.html">Home</a></li>
+      <li><a href="employee-list.html">Employee List</a></li>
+    </ul>
+    <div class="user-section">
+      <span>Hukum Gupta</span> - <a href="index.html">Logout</a>
+    </div>
+  </nav>
+
+  <div class="form-container">
+    <h2>Create Employee</h2>
+    <form id="employeeForm" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <small id="emailError" class="error-message"></small>
+      </div>
+      <div class="form-group">
+        <label for="mobile">Mobile No:</label>
+        <input type="text" id="mobile" name="mobile" required>
+        <small id="mobileError" class="error-message"></small>
+      </div>
+      <div class="form-group">
+        <label for="designation">Designation:</label>
+        <select id="designation" name="designation" required>
+          <option value="">Select</option>
+          <option value="HR">HR</option>
+          <option value="Manager">Manager</option>
+          <option value="Sales">Sales</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Gender:</label>
+        <label><input type="radio" name="gender" value="M" required> Male</label>
+        <label><input type="radio" name="gender" value="F" required> Female</label>
+      </div>
+      <div class="form-group">
+        <label>Course:</label>
+        <label><input type="checkbox" name="courses" value="MCA"> MCA</label>
+        <label><input type="checkbox" name="courses" value="BCA"> BCA</label>
+        <label><input type="checkbox" name="courses" value="BSC"> BSC</label>
+      </div>
+      <div class="form-group">
+        <label for="img">Img Upload:</label>
+        <input type="file" id="img" name="img" accept="image/png, image/jpeg" required>
+        <small id="imgError" class="error-message"></small>
+      </div>
+      <button type="submit" class="btn">Submit</button>
+    </form>
+  </div>
+</body>
+</html>
